@@ -10,9 +10,20 @@ public class Spinning : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.localRotation *= 
+		// w=forward / s=back
+		transform.localRotation = 
 			Quaternion.LerpUnclamped (Quaternion.identity,
 			Quaternion.FromToRotation (player.forward, player.up),
-				Time.deltaTime * Input.GetAxis("Vertical"));
+			Time.deltaTime * Input.GetAxis ("Vertical"))
+		*
+			transform.localRotation;
+
+		// a=left / d=right
+		transform.localRotation = 
+		Quaternion.LerpUnclamped (Quaternion.identity,
+			Quaternion.FromToRotation (player.right, player.up),
+			Time.deltaTime * Input.GetAxis ("Horizontal"))
+		*
+		transform.localRotation;
 	}
 }
